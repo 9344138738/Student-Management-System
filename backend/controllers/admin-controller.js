@@ -55,6 +55,7 @@ const Complain = require('../models/complainSchema.js');
 //     }
 // };
 
+
 const adminRegister = async (req, res) => {
     try {
         const admin = new Admin({
@@ -112,6 +113,8 @@ const getAdminDetail = async (req, res) => {
         res.status(500).json(err);
     }
 }
+
+
 
 // const deleteAdmin = async (req, res) => {
 //     try {

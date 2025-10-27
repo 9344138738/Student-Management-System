@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { Box, Avatar, Menu, MenuItem, ListItemIcon, Divider, IconButton, Tooltip } from '@mui/material';
-import { Settings, Logout } from '@mui/icons-material';
+import { Settings, Logout, Image } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 const AccountMenu = () => {
-    const [anchorEl, setAnchorEl] = useState(null);
-
+  
+  const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
 
     const { currentRole, currentUser } = useSelector(state => state.user);
@@ -17,6 +17,7 @@ const AccountMenu = () => {
     const handleClose = () => {
         setAnchorEl(null);
     };
+
     return (
         <>
             <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
@@ -41,40 +42,44 @@ const AccountMenu = () => {
                 open={open}
                 onClose={handleClose}
                 onClick={handleClose}
-                PaperProps={{
-                    elevation: 0,
-                    sx: styles.styledPaper,
-                }}
+                PaperProps={{ elevation: 0, sx: styles.styledPaper }}
                 transformOrigin={{ horizontal: 'right', vertical: 'top' }}
                 anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
             >
-                <MenuItem>
+                <MenuItem component={Link} to={`/${currentRole}/profile`}>
                     <Avatar />
-                    <Link to={`/${currentRole}/profile`}>
-                        Profile
-                    </Link>
+                    Profile
                 </MenuItem>
+
                 <Divider />
+
                 <MenuItem onClick={handleClose}>
                     <ListItemIcon>
                         <Settings fontSize="small" />
                     </ListItemIcon>
                     Settings
                 </MenuItem>
-                <MenuItem>
+
+                {/* 👇 Add this Link for Image Upload */}
+                <MenuItem component={Link} to={`/${currentRole}/imageupload`} onClick={handleClose}>
+                    <ListItemIcon>
+                        <Image fontSize="small" />
+                    </ListItemIcon>
+                    Image Upload
+                </MenuItem>
+
+                <MenuItem component={Link} to="/logout">
                     <ListItemIcon>
                         <Logout fontSize="small" />
                     </ListItemIcon>
-                    <Link to="/logout">
-                        Logout
-                    </Link>
+                    Logout
                 </MenuItem>
             </Menu>
         </>
     );
-}
+};
 
-export default AccountMenu
+export default AccountMenu;
 
 const styles = {
     styledPaper: {
@@ -99,5 +104,5 @@ const styles = {
             transform: 'translateY(-50%) rotate(45deg)',
             zIndex: 0,
         },
-    }
-}
+    },
+};
